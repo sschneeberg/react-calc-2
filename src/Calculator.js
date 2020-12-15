@@ -113,6 +113,7 @@ const Calculator = (props) => {
         }
     };
 
+    //instead of if statments make an object of funcitons for cosntant time look up!!
     const doMath = () => {
         if (operator === '+') {
             //add
