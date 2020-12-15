@@ -40,6 +40,7 @@ const Calculator = (props) => {
         }
     };
 
+    //should have added condition for leading 0 and kept everything as string until doing math rather than using to toFixed and parse float to deal with zeros
     const setNum = (e) => {
         if (operator) {
             if (num2.toString().length === 8) {
