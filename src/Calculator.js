@@ -29,6 +29,9 @@ const Calculator = (props) => {
     };
 
     const setOp = (e) => {
+        if (!num1) {
+            return;
+        }
         if (operator) {
             setOperator(e.target.innerText);
             doMath();
