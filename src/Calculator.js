@@ -7,6 +7,7 @@ const Calculator = (props) => {
     const [answer, setAnswer] = useState(0);
     const [operator, setOperator] = useState('');
     const [clear, setClear] = useState('C');
+    const [tallied, setTallied] = useState(false);
 
     //clear everything
     const allClear = () => {
@@ -37,12 +38,22 @@ const Calculator = (props) => {
     };
 
     const setNum = (e) => {
+        console.log('1, 2', num1, num2);
         if (operator) {
-            setNum2(e.target.innerText);
-            setAnswer(e.target.innerText);
+            let newNum = parseFloat(num2 + e.target.innerText);
+            setNum2(newNum);
+            setAnswer(+newNum.toFixed(4));
         } else {
-            setNum1(e.target.innerText);
-            setAnswer(e.target.innerText);
+            if (tallied) {
+                let newNum = parseInt(e.target.innerText);
+                setNum1(newNum);
+                setAnswer(+newNum.toFixed(4));
+                setTallied(false);
+            } else {
+                let newNum = parseFloat(num1 + e.target.innerText);
+                setNum1(newNum);
+                setAnswer(+newNum.toFixed(4));
+            }
         }
         if (clear === 'AC') {
             setClear('C');
@@ -81,6 +92,8 @@ const Calculator = (props) => {
             setAnswer(+ans.toFixed(4));
             setNum1(+ans.toFixed(4));
         }
+        setTallied(true);
+        setNum2(0);
     };
 
     return (
@@ -228,7 +241,6 @@ const Calculator = (props) => {
                         onClick={() => {
                             doMath();
                             setOperator('');
-                            setNum2(0);
                         }}
                         className="calc-button calc-button-op">
                         =
