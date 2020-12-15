@@ -39,6 +39,9 @@ const Calculator = (props) => {
 
     const setNum = (e) => {
         if (operator) {
+            if (num2.toString().length === 8) {
+                return;
+            }
             if (e.target.innerText === '0' && num2.toString().includes('.')) {
                 let newNum = num2 + e.target.innerText;
                 setNum2(newNum);
@@ -49,6 +52,9 @@ const Calculator = (props) => {
                 setAnswer(+newNum.toFixed(6));
             }
         } else {
+            if (num1.toString().length === 8) {
+                return;
+            }
             if (tallied) {
                 let newNum = parseInt(e.target.innerText);
                 setNum1(newNum);
@@ -85,14 +91,20 @@ const Calculator = (props) => {
 
     const setDecimal = () => {
         if (operator) {
+            if (num2.toString().length === 7) {
+                return;
+            }
             if (!num2.toString().includes('.')) {
                 setNum2(num2.toString() + '.');
-                setAnswer(answer.toString() + '.');
+                setAnswer(num2.toString() + '.');
             }
         } else {
+            if (num1.toString().length === 7) {
+                return;
+            }
             if (!num1.toString().includes('.')) {
                 setNum1(num1.toString() + '.');
-                setAnswer(answer.toString() + '.');
+                setAnswer(num1.toString() + '.');
             }
         }
     };
