@@ -38,21 +38,35 @@ const Calculator = (props) => {
     };
 
     const setNum = (e) => {
-        console.log('1, 2', num1, num2);
         if (operator) {
-            let newNum = parseFloat(num2 + e.target.innerText);
-            setNum2(newNum);
-            setAnswer(+newNum.toFixed(4));
+            if (e.target.innerText === '0' && num2.toString().includes('.')) {
+                let newNum = num2 + e.target.innerText;
+                setNum2(newNum);
+                setAnswer(newNum);
+            } else {
+                let newNum = parseFloat(num2 + e.target.innerText);
+                setNum2(newNum);
+                setAnswer(+newNum.toFixed(6));
+            }
         } else {
             if (tallied) {
                 let newNum = parseInt(e.target.innerText);
                 setNum1(newNum);
-                setAnswer(+newNum.toFixed(4));
+                setAnswer(+newNum.toFixed(6));
                 setTallied(false);
             } else {
-                let newNum = parseFloat(num1 + e.target.innerText);
-                setNum1(newNum);
-                setAnswer(+newNum.toFixed(4));
+                if (
+                    e.target.innerText === '0' &&
+                    num1.toString().includes('.')
+                ) {
+                    let newNum = num1 + e.target.innerText;
+                    setNum1(newNum);
+                    setAnswer(newNum);
+                } else {
+                    let newNum = parseFloat(num1 + e.target.innerText);
+                    setNum1(newNum);
+                    setAnswer(+newNum.toFixed(6));
+                }
             }
         }
         if (clear === 'AC') {
@@ -69,28 +83,41 @@ const Calculator = (props) => {
         setAnswer(answer * -1);
     };
 
+    const setDecimal = () => {
+        if (operator) {
+            if (!num2.toString().includes('.')) {
+                setNum2(num2.toString() + '.');
+                setAnswer(answer.toString() + '.');
+            }
+        } else {
+            if (!num1.toString().includes('.')) {
+                setNum1(num1.toString() + '.');
+                setAnswer(answer.toString() + '.');
+            }
+        }
+    };
+
     const doMath = () => {
-        console.log(num1, num2, operator);
         if (operator === '+') {
             //add
             let ans = parseFloat(num1) + parseFloat(num2);
-            setAnswer(+ans.toFixed(4));
-            setNum1(+ans.toFixed(4));
+            setAnswer(+ans.toFixed(6));
+            setNum1(+ans.toFixed(6));
         } else if (operator === '-') {
             //subtract
             let ans = parseFloat(num1) - parseFloat(num2);
-            setAnswer(+ans.toFixed(4));
-            setNum1(+ans.toFixed(4));
+            setAnswer(+ans.toFixed(6));
+            setNum1(+ans.toFixed(6));
         } else if (operator === 'x') {
             //multiply
             let ans = parseFloat(num1) * parseFloat(num2);
-            setAnswer(+ans.toFixed(4));
-            setNum1(+ans.toFixed(4));
+            setAnswer(+ans.toFixed(6));
+            setNum1(+ans.toFixed(6));
         } else if (operator === '/') {
             //divide
             let ans = parseFloat(num1) / parseFloat(num2);
-            setAnswer(+ans.toFixed(4));
-            setNum1(+ans.toFixed(4));
+            setAnswer(+ans.toFixed(6));
+            setNum1(+ans.toFixed(6));
         }
         setTallied(true);
         setNum2(0);
@@ -232,7 +259,7 @@ const Calculator = (props) => {
                     </button>
                     <button
                         onClick={(e) => {
-                            setNum(e);
+                            setDecimal(e);
                         }}
                         className="calc-button">
                         .
